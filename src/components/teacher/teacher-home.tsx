@@ -12,13 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { RequireRole } from "@/components/auth/require-role";
-import {
-  apiFetch,
-  getStoredUser,
-  type Course,
-  type GeneratedQuestion,
-  type ProfileUser,
-} from "@/lib/api";
+import { apiFetch, getStoredUser } from "@/lib/api";
+import type { Course, GeneratedQuestion, ProfileUser } from "@/types/api";
 import { cn } from "cn";
 
 type Tab = "courses" | "students" | "ai" | "profile";

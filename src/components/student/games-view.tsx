@@ -13,15 +13,14 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { RequireStudent } from "@/components/student/require-student";
 import { TopicPicker } from "@/components/student/topic-picker";
-import {
-  apiFetch,
-  optionText,
-  type Game,
-  type GameStats,
-  type LeaderboardEntry,
-  type Question,
-  type Topic,
-} from "@/lib/api";
+import { apiFetch, optionText } from "@/lib/api";
+import type {
+  Game,
+  GameStats,
+  LeaderboardEntry,
+  Question,
+  Topic,
+} from "@/types/api";
 import { cn } from "cn";
 
 type Tab = "play" | "leaderboard" | "stats";

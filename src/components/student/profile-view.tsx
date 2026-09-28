@@ -12,7 +12,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { RequireStudent } from "@/components/student/require-student";
-import { apiFetch, type ProfileUser } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import type { ProfileUser } from "@/types/api";
 
 export function ProfileView() {
   return (

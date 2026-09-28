@@ -17,8 +17,7 @@ import {
   SIGNUP_FIELDS,
   type AuthRole,
 } from "@/lib/auth";
-
-const API_URL = "http://localhost:5000/api";
+import { API_URL } from "@/lib/api";
 
 const REGISTER_PATH: Partial<Record<AuthRole, string>> = {
   student: "/auth/register/student",

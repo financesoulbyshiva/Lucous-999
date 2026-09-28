@@ -27,15 +27,14 @@ import {
   ProgressValue,
 } from "@/components/ui/progress";
 import { RequireStudent } from "@/components/student/require-student";
-import {
-  apiFetch,
-  getStoredUser,
-  type Attempt,
-  type Board,
-  type Grade,
-  type Subject,
-  type WeakTopic,
-} from "@/lib/api";
+import { apiFetch, getStoredUser } from "@/lib/api";
+import type {
+  Attempt,
+  Board,
+  Grade,
+  Subject,
+  WeakTopic,
+} from "@/types/api";
 import { useSession } from "@/lib/use-session";
 
 const QUICK_ACTIONS = [

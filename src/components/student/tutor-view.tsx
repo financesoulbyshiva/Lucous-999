@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { RequireStudent } from "@/components/student/require-student";
-import { apiFetch, type TutorResponse } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import type { TutorResponse } from "@/types/api";
 
 interface ChatMessage {
   role: "user" | "assistant";

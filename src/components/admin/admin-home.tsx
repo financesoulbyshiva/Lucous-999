@@ -12,14 +12,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { RequireRole } from "@/components/auth/require-role";
-import {
-  apiFetch,
-  getStoredUser,
-  type AdminStats,
-  type AdminUser,
-  type Course,
-  type ProfileUser,
-} from "@/lib/api";
+import { apiFetch, getStoredUser } from "@/lib/api";
+import type {
+  AdminStats,
+  AdminUser,
+  Course,
+  ProfileUser,
+} from "@/types/api";
 import { cn } from "cn";
 
 type Tab = "overview" | "users" | "courses" | "profile";

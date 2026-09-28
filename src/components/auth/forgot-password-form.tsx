@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ROLE_CONFIG, type AuthRole } from "@/lib/auth";
-
-const API_URL = "http://localhost:5000/api";
+import { API_URL } from "@/lib/api";
 
 type Step = "email" | "reset" | "done";
 

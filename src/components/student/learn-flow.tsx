@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/card";
 import { RequireStudent } from "@/components/student/require-student";
 import { TopicPicker } from "@/components/student/topic-picker";
-import { apiFetch, type ContentItem, type Topic } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import type { ContentItem, Topic } from "@/types/api";
 
 export function LearnFlow() {
   const [topic, setTopic] = React.useState<Topic | null>(null);
   const [contents, setContents] = React.useState<ContentItem[]>([]);
-  const [completedIds, setCompletedIds] = React.useState<number[]>([]);
+  const [completedIds, setCompletedIds] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
 
@@ -29,7 +30,7 @@ export function LearnFlow() {
       try {
         const data = await apiFetch<{
           contents: ContentItem[];
-          completedIds: number[];
+          completedIds: string[];
         }>(`/student/content?topicId=${topicId}`);
         if (active) {
           setContents(data.contents);
@@ -55,7 +56,7 @@ export function LearnFlow() {
     setLoading(true);
   }
 
-  async function markComplete(contentId: number) {
+  async function markComplete(contentId: string) {
     try {
       await apiFetch("/student/progress", {
         method: "POST",

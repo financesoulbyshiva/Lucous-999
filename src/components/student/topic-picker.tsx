@@ -1,14 +1,8 @@
 "use client";
 
 import * as React from "react";
-import {
-  apiFetch,
-  type Board,
-  type Chapter,
-  type Grade,
-  type Subject,
-  type Topic,
-} from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import type { Board, Chapter, Grade, Subject, Topic } from "@/types/api";
 
 const selectClass =
   "h-10 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";

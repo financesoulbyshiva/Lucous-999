@@ -12,14 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RequireStudent } from "@/components/student/require-student";
-import {
-  apiFetch,
-  getStoredUser,
-  type Course,
-  type Enrollment,
-  type OrderResponse,
-  type PaymentConfig,
-} from "@/lib/api";
+import { apiFetch, getStoredUser } from "@/lib/api";
+import type {
+  Course,
+  Enrollment,
+  OrderResponse,
+  PaymentConfig,
+} from "@/types/api";
 import { cn } from "cn";
 
 interface RazorpayOptions {

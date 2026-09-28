@@ -13,7 +13,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { RequireStudent } from "@/components/student/require-student";
-import { apiFetch, type Attempt, type WeakTopic } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import type { Attempt, WeakTopic } from "@/types/api";
 
 export function ResultsView() {
   const [loading, setLoading] = React.useState(true);

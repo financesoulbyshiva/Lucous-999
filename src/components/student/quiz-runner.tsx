@@ -15,14 +15,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { RequireStudent } from "@/components/student/require-student";
 import { TopicPicker } from "@/components/student/topic-picker";
-import {
-  apiFetch,
-  optionText,
-  type Attempt,
-  type PerQuestion,
-  type Question,
-  type Topic,
-} from "@/lib/api";
+import { apiFetch, optionText } from "@/lib/api";
+import type { Attempt, PerQuestion, Question, Topic } from "@/types/api";
 
 type QuizMode = "PLAY" | "PRACTICE" | "TEST" | "RETEST";
 
@@ -124,8 +118,8 @@ function QuizRunner({
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
   const [index, setIndex] = React.useState(0);
-  const [answers, setAnswers] = React.useState<Record<number, number>>({});
-  const [feedback, setFeedback] = React.useState<Record<number, Feedback>>({});
+  const [answers, setAnswers] = React.useState<Record<string, number>>({});
+  const [feedback, setFeedback] = React.useState<Record<string, Feedback>>({});
   const [phase, setPhase] = React.useState<"quiz" | "result">("quiz");
   const [submitting, setSubmitting] = React.useState(false);
   const [result, setResult] = React.useState<{
@@ -155,7 +149,7 @@ function QuizRunner({
   const question = questions[index];
   const total = questions.length;
   const answeredCount = Object.keys(answers).length;
-  const points = Object.values(feedback).filter((f) => f.correct).length * 10;
+  const points = (Object.values(feedback) as Feedback[]).filter((f) => f.correct).length * 10;
 
   async function selectOption(optionIndex: number) {
     if (!question) return;
@@ -227,7 +221,7 @@ function QuizRunner({
 
   if (phase === "result" && result) {
     const { attempt, perQuestion } = result;
-    const byId = new Map(questions.map((q) => [q.id, q]));
+    const byId = new Map<string, Question>(questions.map((q) => [q.id, q]));
     return (
       <div className="grid gap-5">
         <Card>
@@ -265,7 +259,7 @@ function QuizRunner({
 
         <div className="grid gap-3">
           {perQuestion.map((pq, i) => {
-            const q = byId.get(pq.questionId);
+            const q = byId.get(String(pq.questionId));
             if (!q) return null;
             return (
               <Card key={pq.questionId}>
