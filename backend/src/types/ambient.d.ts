@@ -1,5 +1,12 @@
 // Ambient declarations allowing backend TypeScript compilation before npm install
 
+declare class Buffer extends Uint8Array {
+  static from(str: string | Uint8Array | ArrayBuffer | any, encoding?: string): Buffer;
+  static isBuffer(obj: any): obj is Buffer;
+  toString(encoding?: string): string;
+  length: number;
+}
+
 declare namespace NodeJS {
   interface ProcessEnv {
     [key: string]: string | undefined;
@@ -10,6 +17,25 @@ declare namespace NodeJS {
 }
 
 declare const process: NodeJS.Process;
+
+declare module "crypto" {
+  export interface Hmac {
+    update(data: string | Buffer): Hmac;
+    digest(encoding?: string): any;
+  }
+  export function createHmac(algorithm: string, key: string | Buffer): Hmac;
+  export function timingSafeEqual(a: Buffer, b: Buffer): boolean;
+  export function randomBytes(size: number): Buffer;
+
+  interface CryptoModule {
+    createHmac: typeof createHmac;
+    timingSafeEqual: typeof timingSafeEqual;
+    randomBytes: typeof randomBytes;
+  }
+
+  const crypto: CryptoModule;
+  export default crypto;
+}
 
 declare module "dotenv" {
   export function config(options?: unknown): { error?: Error; parsed?: Record<string, string> };
@@ -56,16 +82,43 @@ declare module "express" {
     [key: string]: any;
   }
   export type NextFunction = (err?: any) => void;
-  export interface Application {
-    use(...args: any[]): any;
-    get(...args: any[]): any;
-    post(...args: any[]): any;
-    options(...args: any[]): any;
-    listen(port: number, cb?: () => void): any;
+  export type RequestHandler = (req: Request, res: Response, next: NextFunction) => any;
+  export type ErrorRequestHandler = (err: any, req: Request, res: Response, next: NextFunction) => any;
+
+  export interface IRouter {
+    use(...handlers: any[]): this;
+    get(path: string, ...handlers: any[]): this;
+    post(path: string, ...handlers: any[]): this;
+    put(path: string, ...handlers: any[]): this;
+    delete(path: string, ...handlers: any[]): this;
+    patch(path: string, ...handlers: any[]): this;
+    all(path: string, ...handlers: any[]): this;
+    [key: string]: any;
   }
+
+  export interface Application extends IRouter {
+    listen(port: number | string, cb?: () => void): any;
+  }
+
+  export function Router(options?: any): IRouter;
+  export function json(options?: any): any;
+
   function express(): Application;
   namespace express {
+    export { Request, Response, NextFunction, RequestHandler, ErrorRequestHandler, IRouter, Application };
+    export function Router(options?: any): IRouter;
     export function json(options?: any): any;
   }
   export default express;
+}
+
+declare module "cors" {
+  export default function cors(options?: any): any;
+}
+
+declare module "bcryptjs" {
+  export function hash(s: string, salt: number | string): Promise<string>;
+  export function compare(s: string, hash: string): Promise<boolean>;
+  const bcrypt: { hash: typeof hash; compare: typeof compare };
+  export default bcrypt;
 }
