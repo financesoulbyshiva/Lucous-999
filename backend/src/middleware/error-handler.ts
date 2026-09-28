@@ -1,6 +1,17 @@
-const env = require("../config/env");
+import { Request, Response, NextFunction } from "express";
+import env from "../config/env";
 
-function errorHandler(err, req, res, next) {
+export interface CustomError extends Error {
+  status?: number;
+  statusCode?: number;
+}
+
+export function errorHandler(
+  err: CustomError,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void | Response {
   console.error("Unhandled error:", err);
 
   if (res.headersSent) {
@@ -13,11 +24,11 @@ function errorHandler(err, req, res, next) {
       ? "Internal server error"
       : err.message || "An unexpected error occurred";
 
-  res.status(statusCode).json({
+  return res.status(statusCode).json({
     success: false,
     message,
     ...(env.isDevelopment && err.stack ? { stack: err.stack } : {}),
   });
 }
 
-module.exports = errorHandler;
+export default errorHandler;

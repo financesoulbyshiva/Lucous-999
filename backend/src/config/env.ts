@@ -1,10 +1,28 @@
+import dotenv from "dotenv";
+
 try {
-  require("dotenv").config();
+  dotenv.config();
 } catch (_) {
-  // dotenv not installed yet or loaded via Node --env-file
+  // dotenv loaded via runtime flag or will be loaded when dependencies are installed
 }
 
-const env = {
+export interface BackendEnv {
+  PORT: number;
+  NODE_ENV: string;
+  isProduction: boolean;
+  isDevelopment: boolean;
+  JWT_SECRET: string;
+  MONGODB_URI: string;
+  CORS_ORIGINS: string[];
+  AI_PROVIDER: string;
+  AI_API_KEY: string;
+  AI_MODEL: string;
+  RAZORPAY_KEY_ID: string;
+  RAZORPAY_KEY_SECRET: string;
+  RAZORPAY_WEBHOOK_SECRET: string;
+}
+
+export const env: BackendEnv = {
   // Server
   PORT: process.env.PORT ? Number(process.env.PORT) : 5000,
   NODE_ENV: process.env.NODE_ENV || "development",
@@ -14,7 +32,7 @@ const env = {
   // Security / JWT
   JWT_SECRET: process.env.JWT_SECRET || "lucous-development-secret",
 
-  // Database (used by Prisma datasource in schema.prisma)
+  // Database
   MONGODB_URI: process.env.MONGODB_URI || "",
 
   // CORS
@@ -35,5 +53,4 @@ const env = {
   RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET || "",
 };
 
-module.exports = env;
-module.exports.env = env;
+export default env;
